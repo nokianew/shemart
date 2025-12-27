@@ -1,28 +1,32 @@
 <?php
-// config.php
 if (session_status() === PHP_SESSION_NONE) {
     session_start();
 }
 
+// Railway MySQL connection using environment variable
 
-$host = 'localhost';
-$db   = 'womenshop';
+$databaseUrl = getenv("MYSQL_URL");
 
-// DB credentials — adjust if different
-$dbhost = 'localhost';
-$dbuser = 'root';
-$dbpass = '';        // XAMPP default: empty
-$dbname = 'womenshop';
+if (!$databaseUrl) {
+    die("MYSQL_URL not set");
+}
 
-// create mysqli connection and expose $conn
-$conn = new mysqli($dbhost, $dbuser, $dbpass, $dbname);
+$db = parse_url($databaseUrl);
+
+$dbhost = $db["host"];
+$dbport = $db["port"] ?? 3306;
+$dbuser = $db["user"];
+$dbpass = $db["pass"];
+$dbname = ltrim($db["path"], "/");
+
+$conn = new mysqli($dbhost, $dbuser, $dbpass, $dbname, $dbport);
+
 if ($conn->connect_errno) {
-    // In development show the error; in production handle this more gracefully
     die('Database connection failed: ' . $conn->connect_error);
 }
 
-// set charset
 $conn->set_charset('utf8mb4');
+
 
 
 // =======================
@@ -51,7 +55,7 @@ try {
     die('Database connection failed: ' . $e->getMessage());
 }
 
-$site_name = "PawanGenS"; // your brand name
+$site_name = "Shemart"; // your brand name
 
 
 // -----------------------------------
