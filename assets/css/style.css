@@ -1,0 +1,191 @@
+/* Global background & font tweaks */
+body {
+    background-color: #fdf7fb; /* very light pink */
+    font-family: system-ui, -apple-system, BlinkMacSystemFont, "Segoe UI", sans-serif;
+}
+
+/* Navbar styling */
+.navbar {
+    border-bottom: 1px solid #f1d9ea;
+}
+
+.navbar-brand {
+    font-weight: 700;
+    letter-spacing: 0.5px;
+}
+
+/* Make primary color more feminine (rose / mauve) */
+.btn-primary,
+.btn-outline-primary:hover,
+.page-link,
+.badge.bg-primary {
+    background-color: #e76da9 !important;
+    border-color: #e76da9 !important;
+}
+
+.btn-outline-primary {
+    color: #e76da9;
+    border-color: #e76da9;
+}
+
+.btn-outline-primary:hover {
+    color: #fff;
+}
+
+/* Links in navbar */
+.navbar-light .navbar-nav .nav-link {
+    color: #555;
+    font-weight: 500;
+}
+
+.navbar-light .navbar-nav .nav-link:hover,
+.navbar-light .navbar-nav .nav-link.active {
+    color: #e76da9;
+}
+
+/* Cards / product tiles */
+.card {
+    border: none;
+    border-radius: 1rem;
+    box-shadow: 0 10px 25px rgba(231, 109, 169, 0.08);
+    overflow: hidden;
+    transition: transform 0.15s ease, box-shadow 0.15s ease;
+}
+
+.card:hover {
+    transform: translateY(-4px);
+    box-shadow: 0 15px 30px rgba(231, 109, 169, 0.15);
+}
+
+.card-img-top {
+    height: 220px;
+    object-fit: cover;
+}
+
+/* Product price styling */
+.card .card-body strong,
+h3.text-primary {
+    color: #d25594 !important;
+}
+
+/* Headings */
+h1, h2, h3, h4, h5, h6 {
+    color: #3b2940;
+}
+
+/* Category title spacing */
+h1.mb-4 {
+    font-weight: 700;
+}
+
+/* Footer */
+footer {
+    background: #f8e9f3 !important;
+    color: #7b5a7e;
+}
+
+/* Cart page table tweaks */
+.table thead th {
+    border-bottom-width: 2px;
+    border-color: #f1d9ea;
+}
+
+.table tbody tr:hover {
+    background-color: #fff9fd;
+}
+
+/* Buttons – rounded & softer */
+.btn {
+    border-radius: 999px;
+    font-weight: 500;
+}
+
+.btn-lg {
+    padding: 0.7rem 1.6rem;
+}
+
+/* Form controls */
+.form-control,
+.form-select {
+    border-radius: 999px;
+    border-color: #f1d9ea;
+}
+
+.form-control:focus,
+.form-select:focus {
+    border-color: #e76da9;
+    box-shadow: 0 0 0 0.15rem rgba(231, 109, 169, 0.25);
+}
+
+/* Admin tables minor polish */
+.table-striped > tbody > tr:nth-of-type(odd) {
+    --bs-table-accent-bg: #fff9fd;
+}
+
+/* Mobile tweaks */
+@media (max-width: 576px) {
+    .card-img-top {
+        height: 180px;
+    }
+}
+/* WhatsApp floating button */
+.whatsapp-float {
+    position: fixed;
+    right: 18px;
+    bottom: 18px;
+    z-index: 9999;
+}
+
+.whatsapp-float a {
+    position: relative;  /* IMPORTANT — required for animation + SVG */
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    width: 54px;
+    height: 54px;
+    border-radius: 50%;
+    background-color: #25D366;
+    color: #fff;
+    text-decoration: none;
+    box-shadow: 0 10px 20px rgba(0, 0, 0, 0.18);
+    transition: transform 0.2s ease, box-shadow 0.2s ease, background-color 0.2s ease;
+}
+
+/* SVG icon inside the button */
+.whatsapp-float svg {
+    width: 24px;
+    height: 24px;
+    fill: #ffffff;
+}
+
+.whatsapp-float a:hover {
+    transform: translateY(-3px);
+    background-color: #1ebe5d;
+    box-shadow: 0 14px 26px rgba(0, 0, 0, 0.28);
+}
+
+/* Optional pulse animation */
+.whatsapp-float a::after {
+    content: "";
+    position: absolute;
+    width: 54px;
+    height: 54px;
+    border-radius: 50%;
+    border: 2px solid rgba(37, 211, 102, 0.6);
+    animation: wa-pulse 2s infinite;
+}
+
+@keyframes wa-pulse {
+    0% {
+        transform: scale(1);
+        opacity: 0.9;
+    }
+    100% {
+        transform: scale(1.5);
+        opacity: 0;
+    }
+}
+/* Hide the first (duplicate) Shop by Category block */
+.shop-by-category:first-of-type {
+  display: none !important;
+}
