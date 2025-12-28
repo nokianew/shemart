@@ -3,72 +3,52 @@ if (session_status() === PHP_SESSION_NONE) {
     session_start();
 }
 
-// Railway MySQL connection using environment variable
+// =======================
+// Database (Railway via Render env vars)
+// =======================
 
-$databaseUrl = getenv("MYSQL_URL");
+$dbhost = $_ENV['DB_HOST'] ?? null;
+$dbport = $_ENV['DB_PORT'] ?? 3306;
+$dbuser = $_ENV['DB_USER'] ?? null;
+$dbpass = $_ENV['DB_PASS'] ?? null;
+$dbname = $_ENV['DB_NAME'] ?? null;
 
-if (!$databaseUrl) {
-    die("MYSQL_URL not set");
+if (!$dbhost || !$dbuser || !$dbname) {
+    die('Database configuration missing');
 }
 
-$db = parse_url($databaseUrl);
+mysqli_report(MYSQLI_REPORT_ERROR | MYSQLI_REPORT_STRICT);
 
-$dbhost = $db["host"];
-$dbport = $db["port"] ?? 3306;
-$dbuser = $db["user"];
-$dbpass = $db["pass"];
-$dbname = ltrim($db["path"], "/");
-
-$conn = new mysqli($dbhost, $dbuser, $dbpass, $dbname, $dbport);
-
-if ($conn->connect_errno) {
-    die('Database connection failed: ' . $conn->connect_error);
-}
+$conn = new mysqli(
+    $dbhost,
+    $dbuser,
+    $dbpass,
+    $dbname,
+    (int)$dbport
+);
 
 $conn->set_charset('utf8mb4');
-
-
 
 // =======================
 // WhatsApp integration
 // =======================
 
-// Use full number with country code, no + symbol, no spaces
-$whatsapp_number = '916260096745';  
+$whatsapp_number = '916260096745';
 $whatsapp_default_message = 'Hi SheMart, I need help with my order.';
 
-$user = 'root';
-$pass = '';
-$charset = 'utf8mb4';
+$site_name = "Shemart";
 
-$dsn = "mysql:host=$host;dbname=$db;charset=$charset";
-
-$options = [
-    PDO::ATTR_ERRMODE            => PDO::ERRMODE_EXCEPTION,
-    PDO::ATTR_DEFAULT_FETCH_MODE => PDO::FETCH_ASSOC,
-    PDO::ATTR_EMULATE_PREPARES   => false,
-];
-
-try {
-    $pdo = new PDO($dsn, $user, $pass, $options);
-} catch (\PDOException $e) {
-    die('Database connection failed: ' . $e->getMessage());
-}
-
-$site_name = "Shemart"; // your brand name
-
-
-// -----------------------------------
+// =======================
 // Payment (Razorpay)
-// -----------------------------------
-define('RAZORPAY_KEY_ID', 'rzp_test_your_key_here');      
-define('RAZORPAY_KEY_SECRET', 'your_key_secret_here');    
+// =======================
 
-// -----------------------------------
+define('RAZORPAY_KEY_ID', 'rzp_test_your_key_here');
+define('RAZORPAY_KEY_SECRET', 'your_key_secret_here');
+
+// =======================
 // Twilio / WhatsApp (optional)
-// -----------------------------------
-define('TWILIO_ACCOUNT_SID', '');      
-define('TWILIO_AUTH_TOKEN', '');       
-define('TWILIO_WHATSAPP_FROM', 'whatsapp:+1415xxxxxxx'); 
+// =======================
 
-?>
+define('TWILIO_ACCOUNT_SID', '');
+define('TWILIO_AUTH_TOKEN', '');
+define('TWILIO_WHATSAPP_FROM', 'whatsapp:+1415xxxxxxx');
