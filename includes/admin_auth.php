@@ -1,5 +1,5 @@
 <?php
-$tab = $_GET['tab'] ?? 'login';
+
 // includes/admin_auth.php
 // Centralized admin authentication + csrf + RBAC bootstrap
 
