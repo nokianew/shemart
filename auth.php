@@ -1,4 +1,5 @@
 <?php
+$tab = $_GET['tab'] ?? 'login';
 require_once __DIR__ . '/functions.php';
 
 $page_title = "Login / Sign up";
