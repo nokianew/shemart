@@ -7,40 +7,12 @@ require_once __DIR__ . '/../includes/admin_auth.php';
 adminRequireUser();
 
 require_once __DIR__ . '/../includes/permissions.php';
-
-// 🔐 View orders permission
 requirePermission('orders.view');
 
 require_once __DIR__ . '/../includes/functions.php';
 
-if (!isset($pdo) && function_exists('getDB')) {
-    $pdo = getDB();
-}
-
-
-// Optional: require a role (future use)
-// requireRole('admin'); // uncomment when role-based permissions implemented
-
-// orders_list.php - Final for your DB schema (Sunny K / Nova)
-// ----------------------------------------------------------
-// Expects orders table columns as in your screenshot (total_amount, shipping_* fields, etc.)
-// PDO + prepared statements. Minimal CSS to match admin look.
-
-// DB config - change if needed
-$db_host = 'localhost';
-$db_name = 'womenshop';
-$db_user = 'root';
-$db_pass = '';
-
-try {
-    $pdo = new PDO("mysql:host=$db_host;dbname=$db_name;charset=utf8mb4", $db_user, $db_pass, [
-        PDO::ATTR_ERRMODE => PDO::ERRMODE_EXCEPTION
-    ]);
-} catch (PDOException $e) {
-    die("DB connection failed: " . $e->getMessage());
-}
-
-// Helpers
+$pdo = getDB();
+ 
 function statusBadge($status) {
     $map = [
         'PLACED' => 'badge-pending',
