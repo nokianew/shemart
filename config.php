@@ -1,21 +1,34 @@
 <?php
+echo "<pre>";
+echo "MYSQL_URL via getenv(): ";
+var_dump(getenv('MYSQL_URL'));
+echo "\n\n_ALL ENV:\n";
+print_r($_ENV);
+exit;
+
+
+<?php
 if (session_status() === PHP_SESSION_NONE) {
     session_start();
 }
 
-// =======================
-// Database (Railway via Render env vars)
-// =======================
+/**
+ * Database connection using MYSQL_URL (Railway-safe)
+ */
 
-$dbhost = $_ENV['DB_HOST'] ?? null;
-$dbport = $_ENV['DB_PORT'] ?? 3306;
-$dbuser = $_ENV['DB_USER'] ?? null;
-$dbpass = $_ENV['DB_PASS'] ?? null;
-$dbname = $_ENV['DB_NAME'] ?? null;
+$databaseUrl = getenv('MYSQL_URL');
 
-if (!$dbhost || !$dbuser || !$dbname) {
-    die('Database configuration missing');
+if (!$databaseUrl) {
+    die('MYSQL_URL not set');
 }
+
+$db = parse_url($databaseUrl);
+
+$dbhost = $db['host'];
+$dbport = $db['port'] ?? 3306;
+$dbuser = $db['user'];
+$dbpass = $db['pass'] ?? '';
+$dbname = ltrim($db['path'], '/');
 
 mysqli_report(MYSQLI_REPORT_ERROR | MYSQLI_REPORT_STRICT);
 
@@ -28,6 +41,7 @@ $conn = new mysqli(
 );
 
 $conn->set_charset('utf8mb4');
+
 
 // =======================
 // WhatsApp integration
