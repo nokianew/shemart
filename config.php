@@ -4,8 +4,8 @@ if (session_status() === PHP_SESSION_NONE) {
 }
 
 /**
- * Database connection using Railway MYSQL_URL
- * Works ONLY inside Render (correct behavior)
+ * Database connection using Railway MYSQL_URL (PDO)
+ * Compatible with existing functions.php
  */
 
 $databaseUrl = getenv('MYSQL_URL');
@@ -22,11 +22,19 @@ $user = $db['user'];
 $pass = $db['pass'] ?? '';
 $name = ltrim($db['path'], '/');
 
-mysqli_report(MYSQLI_REPORT_ERROR | MYSQLI_REPORT_STRICT);
+$dsn = "mysql:host={$host};port={$port};dbname={$name};charset=utf8mb4";
 
-$conn = new mysqli($host, $user, $pass, $name, (int)$port);
-$conn->set_charset('utf8mb4');
+$options = [
+    PDO::ATTR_ERRMODE            => PDO::ERRMODE_EXCEPTION,
+    PDO::ATTR_DEFAULT_FETCH_MODE => PDO::FETCH_ASSOC,
+    PDO::ATTR_EMULATE_PREPARES   => false,
+];
 
+try {
+    $pdo = new PDO($dsn, $user, $pass, $options);
+} catch (PDOException $e) {
+    die('Database connection failed');
+}
 
 // =======================
 // WhatsApp integration
