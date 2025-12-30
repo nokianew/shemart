@@ -32,6 +32,7 @@ $options = [
 
 try {
     $pdo = new PDO($dsn, $user, $pass, $options);
+    $GLOBALS['pdo'] = $pdo; // <-- ADD THIS LINE
 } catch (PDOException $e) {
     die('Database connection failed');
 }
