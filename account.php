@@ -1,4 +1,5 @@
 ﻿<?php
+require_once __DIR__ . '/config.php';
 require_once __DIR__ . '/functions.php';
 
 // Only logged-in customers can see this
@@ -6,6 +7,7 @@ requireUser();
 
 $page_title = "My Account";
 $user = currentUser();
+
 
 // Determine the logged-in user id safely (support multiple variable names)
 $loggedUserId = null;
