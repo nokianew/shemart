@@ -64,7 +64,7 @@ include __DIR__ . '/partials/header.php';
   </div>
 
   <button class="btn btn-primary">Login</button>
-  <a href="auth.php">Create new account</a>
+  <a href="auth.php?tab=signup">Create new account</a>
 </form>
 
 <?php include __DIR__ . '/partials/footer.php'; ?>
