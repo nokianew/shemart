@@ -165,3 +165,30 @@ function adminLogin(string $username, string $password, bool $remember = false):
 }
 
 // We intentionally omit a closing PHP tag to avoid trailing whitespace issues.
+// ==============================
+// USER AUTH HELPERS (PHASE 1)
+// ==============================
+
+/**
+ * Is a user logged in?
+ */
+function isLoggedIn(): bool {
+    return !empty($_SESSION['user']);
+}
+
+/**
+ * Get current logged-in user
+ */
+function currentUser(): ?array {
+    return $_SESSION['user'] ?? null;
+}
+
+/**
+ * Require user to be logged in
+ */
+function requireUser(): void {
+    if (empty($_SESSION['user'])) {
+        header('Location: auth.php?tab=login');
+        exit;
+    }
+}
